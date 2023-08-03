@@ -19,12 +19,6 @@ export class AwsMicroservicesStack extends Stack {
       billingMode: BillingMode.PAY_PER_REQUEST
     });
 
-    // const fn = new lambda.Function(this, 'MyFunction', {
-    //   runtime: lambda.Runtime.NODEJS_18_X,
-    //   handler: 'index.handler',
-    //   code: lambda.Code.fromAsset(path.join(__dirname, 'lambda-handler')),
-    // });
-
     const nodeJsFunctionProps: NodejsFunctionProps = {
       bundling: {
         externalModules: [
