@@ -4,6 +4,7 @@ import {AttributeType, BillingMode, Table} from "aws-cdk-lib/aws-dynamodb";
 import {NodejsFunction, NodejsFunctionProps} from "aws-cdk-lib/aws-lambda-nodejs";
 import {Runtime} from "aws-cdk-lib/aws-lambda";
 import {join} from "path";
+import {LambdaRestApi} from "aws-cdk-lib/aws-apigateway";
 
 export class AwsMicroservicesStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -32,11 +33,38 @@ export class AwsMicroservicesStack extends Stack {
       runtime: Runtime.NODEJS_18_X
     }
 
-    const productFunction = new NodejsFunction(this, 'productLambdaFunction', {
+    const productLambda = new NodejsFunction(this, 'productLambdaFunction', {
       entry: join(__dirname, `/../src/product/index.js`),
       ...nodeJsFunctionProps,
     })
 
-    productTable.grantReadWriteData(productFunction);
+    productTable.grantReadWriteData(productLambda);
+
+    // Product api gateway
+    // root name = product
+
+    // GET /product
+    // POST /product
+
+    // GET /product/{id}
+    // PUT /product {id}
+    // DELETE /product/{id}
+
+    const apigw = new LambdaRestApi(this, 'productApi', {
+      restApiName: 'Product Service',
+      handler: productLambda,
+      proxy: false
+    });
+
+    const product = apigw.root.addResource('product');
+    product.addMethod('GET');
+    product.addMethod('POST')
+
+    const singleProduct = product.addResource('{id}'); // /product/{id}
+    singleProduct.addMethod('GET'); // GET /product/{id}
+    singleProduct.addMethod('PUT'); // PUT /product/{id}
+    singleProduct.addMethod('DELETE'); // DELETE /product/{id}
+
+
   }
 }
