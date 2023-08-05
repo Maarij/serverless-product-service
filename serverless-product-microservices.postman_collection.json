@@ -1,0 +1,131 @@
+{
+	"info": {
+		"_postman_id": "6febc825-a783-45d3-a01a-987bfeea6fcd",
+		"name": "serverless-product-microservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28971713"
+	},
+	"item": [
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{productEndpoint}}/product/",
+							"host": [
+								"{{productEndpoint}}"
+							],
+							"path": [
+								"product",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"IPhone-X\",\r\n    \"description\": \"Description for the IPhone-X\",\r\n    \"category\": \"Phone\",\r\n    \"price\": 1000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{productEndpoint}}/product/",
+							"host": [
+								"{{productEndpoint}}"
+							],
+							"path": [
+								"product",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{productEndpoint}}/product/174b323e-e93c-47b8-98e3-f0b618fe27e3",
+							"host": [
+								"{{productEndpoint}}"
+							],
+							"path": [
+								"product",
+								"174b323e-e93c-47b8-98e3-f0b618fe27e3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"IPhone-XY\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{productEndpoint}}/product/174b323e-e93c-47b8-98e3-f0b618fe27e3",
+							"host": [
+								"{{productEndpoint}}"
+							],
+							"path": [
+								"product",
+								"174b323e-e93c-47b8-98e3-f0b618fe27e3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{productEndpoint}}/product/174b323e-e93c-47b8-98e3-f0b618fe27e3",
+							"host": [
+								"{{productEndpoint}}"
+							],
+							"path": [
+								"product",
+								"174b323e-e93c-47b8-98e3-f0b618fe27e3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "basket",
+			"item": []
+		},
+		{
+			"name": "order",
+			"item": []
+		}
+	]
+}
