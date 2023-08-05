@@ -64,7 +64,5 @@ export class AwsMicroservicesStack extends Stack {
     singleProduct.addMethod('GET'); // GET /product/{id}
     singleProduct.addMethod('PUT'); // PUT /product/{id}
     singleProduct.addMethod('DELETE'); // DELETE /product/{id}
-
-
   }
 }
