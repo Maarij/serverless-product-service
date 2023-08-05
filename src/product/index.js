@@ -1,4 +1,4 @@
-import { GetItemCommand, PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
+import { DeleteItemCommand, GetItemCommand, PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { ddbClient } from "./ddbClient";
 import { v4 as uuid } from 'uuid';
@@ -16,6 +16,9 @@ exports.handler = async function (event) {
       break;
     case "POST":
       await createProduct(event);
+      break;
+    case "DELETE":
+      await deleteProduct(event.pathParameters.id); // DELETE product/1
       break;
     default:
       throw new Error(`Unsupported route: ${event.httpMethod}`);
@@ -81,6 +84,25 @@ const createProduct = async (event) => {
 
     console.log(createResult);
     return createResult
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
+
+const deleteProduct = async (productId) => {
+  console.log(`deleteProduct for productId ${productId}`);
+
+  try {
+    const params = {
+      TableName: process.env.DYNAMODB_TABLE_NAME,
+      Key: marshall({id: productId})
+    };
+
+    const deleteResult = await ddbClient.send(new DeleteItemCommand(params));
+
+    console.log(deleteResult);
+    return deleteResult
   } catch (e) {
     console.error(e);
     throw e;
