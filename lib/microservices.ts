@@ -40,7 +40,7 @@ export class CompanyMicroservices extends Construct {
       ...nodeJsFunctionProps,
     })
 
-    productTable.grantReadWriteData(this.productMicroservice);
+    productTable.grantReadWriteData(productMicroservice);
 
     return productMicroservice
   }
@@ -60,7 +60,7 @@ export class CompanyMicroservices extends Construct {
     }
 
     const basketMicroservice = new NodejsFunction(this, 'basketLambdaFunction', {
-      entry: join(__dirname, `/../src/product/index.js`),
+      entry: join(__dirname, `/../src/basket/index.js`),
       ...nodeJsFunctionProps,
     })
 
