@@ -11,11 +11,12 @@ export class AwsMicroservicesStack extends Stack {
     const database = new CompanyDatabase(this, 'Database');
 
     const microservices = new CompanyMicroservices(this, 'Microservices', {
-      productTable: database.productTable
+      productTable: database.productTable,
+      basketTable: database.basketTable
     });
 
     const apigateway = new CompanyApiGateway(this, 'ApiGateway', {
-      productMicroservice: microservices.productMicroservices
+      productMicroservice: microservices.productMicroservice
     });
   }
 }
