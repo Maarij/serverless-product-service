@@ -47,7 +47,7 @@ export class CompanyApiGateway extends Construct {
     basket.addMethod('GET');
     basket.addMethod('POST');
 
-    const singleProduct = basket.addResource('{id}'); // /basket/{id}
+    const singleProduct = basket.addResource('{username}'); // /basket/{username}
     singleProduct.addMethod('GET'); // GET /basket/{id}
     singleProduct.addMethod('DELETE'); // DELETE /basket/{id}
 
