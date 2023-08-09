@@ -3,8 +3,6 @@ import {Construct} from 'constructs';
 import {CompanyDatabase} from "./database";
 import {CompanyMicroservices} from "./microservices";
 import {CompanyApiGateway} from "./apigateway";
-import {EventBus, Rule} from "aws-cdk-lib/aws-events";
-import {LambdaFunction} from "aws-cdk-lib/aws-events-targets";
 
 export class AwsMicroservicesStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -22,21 +20,6 @@ export class AwsMicroservicesStack extends Stack {
       basketMicroservice: microservices.basketMicroservice
     });
 
-    const bus = new EventBus(this, 'SwnEventBus', {
-      eventBusName: 'CompanyEventBus'
-    })
 
-    const checkoutBasketRule = new Rule(this, 'CheckoutBasketRule', {
-      eventBus: bus,
-      enabled: true,
-      description: 'When Basket microservice checkouts the basket',
-      eventPattern: {
-        source: ['com.company.basket.checkoutbasket'],
-        detailType: ['CheckoutBasket']
-      },
-      ruleName: 'CheckoutBasketRule'
-    })
-
-    checkoutBasketRule.addTarget(new LambdaFunction(orderingMicroservice));
   }
 }
