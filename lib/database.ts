@@ -6,18 +6,20 @@ export class CompanyDatabase extends Construct {
 
   public readonly productTable: ITable;
   public readonly basketTable: ITable;
+  public readonly orderTable: ITable;
 
   constructor(scope: Construct, id: string) {
     super(scope, id);
 
     this.productTable = this.createProductTable();
     this.basketTable = this.createBasketTable();
+    this.orderTable = this.createOrderTable();
   }
 
+  // Product table
+  // PK: id
+  // name, description, imageFile, price, category
   private createProductTable(): ITable {
-    // Product table
-    // PK: id
-    // name, description, imageFile, price, category
     return new Table(this, 'product', {
       partitionKey: {
         name: 'id',
@@ -29,18 +31,38 @@ export class CompanyDatabase extends Construct {
     });
   }
 
-  private createBasketTable() {
-    // Basket table
-    // PK: username
-    // items (set map)
-    //   item1 -> {quantity, color, price, productId, productName}
-    //   item2 -> {quantity, color, price, productId, productName}
+  // Basket table
+  // PK: username
+  // items (set map)
+  //   item1 -> {quantity, color, price, productId, productName}
+  //   item2 -> {quantity, color, price, productId, productName}
+  private createBasketTable(): ITable {
     return new Table(this, 'basket', {
       partitionKey: {
         name: 'username',
         type: AttributeType.STRING
       },
       tableName: 'basket',
+      removalPolicy: RemovalPolicy.DESTROY,
+      billingMode: BillingMode.PAY_PER_REQUEST
+    });
+  }
+
+  // Order table
+  // PK: username
+  // SK: orderDate
+  // totalPrice, firstName, lastName, email, address, paymentMethod, cardInfo
+  private createOrderTable(): ITable {
+    return new Table(this, 'order', {
+      partitionKey: {
+        name: 'username',
+        type: AttributeType.STRING
+      },
+      sortKey: {
+        name: 'orderDate',
+        type: AttributeType.STRING
+      },
+      tableName: 'order',
       removalPolicy: RemovalPolicy.DESTROY,
       billingMode: BillingMode.PAY_PER_REQUEST
     });

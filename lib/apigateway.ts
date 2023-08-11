@@ -35,7 +35,6 @@ export class CompanyApiGateway extends Construct {
     return apigw;
   }
 
-
   private createBasketApi(basketMicroservice: IFunction) {
     const apigw = new LambdaRestApi(this, 'basketApi', {
       restApiName: 'Basket Service',
@@ -54,4 +53,5 @@ export class CompanyApiGateway extends Construct {
     const basketCheckout = basket.addResource('checkout');
     basketCheckout.addMethod('POST'); // POST /basket/checkout
   }
+
 }

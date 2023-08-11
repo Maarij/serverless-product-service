@@ -25,6 +25,5 @@ export class AwsMicroservicesStack extends Stack {
       publisherFunction: microservices.basketMicroservice,
       targetFunction: microservices.basketMicroservice // Placeholder for compilation
     });
-
   }
 }
