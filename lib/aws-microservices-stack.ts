@@ -3,6 +3,7 @@ import {Construct} from 'constructs';
 import {CompanyDatabase} from "./database";
 import {CompanyMicroservices} from "./microservices";
 import {CompanyApiGateway} from "./apigateway";
+import {CompanyEventBus} from "./eventbus";
 
 export class AwsMicroservicesStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -20,6 +21,10 @@ export class AwsMicroservicesStack extends Stack {
       basketMicroservice: microservices.basketMicroservice
     });
 
+    const eventbus = new CompanyEventBus(this, 'EventBus', {
+      publisherFunction: microservices.basketMicroservice,
+      targetFunction: microservices.basketMicroservice // Placeholder for compilation
+    });
 
   }
 }
