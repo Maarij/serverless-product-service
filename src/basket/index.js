@@ -17,7 +17,7 @@ exports.handler = async function (event) {
         }
         break;
       case "POST":
-        if (event.path == "/basket/checkout") {
+        if (event.path === "/basket/checkout") {
           body = await checkoutBasket(event); // POST /basket/checkout
         } else {
           body = await createBasket(event); // POST /basket
