@@ -7,18 +7,21 @@ import {ITable} from "aws-cdk-lib/aws-dynamodb";
 interface CompanyMicroservicesProps {
   productTable: ITable;
   basketTable: ITable;
+  orderTable: ITable;
 }
 
 export class CompanyMicroservices extends Construct {
 
   public readonly productMicroservice: NodejsFunction;
   public readonly basketMicroservice: NodejsFunction;
+  public readonly orderMicroservice: NodejsFunction;
 
   constructor(scope: Construct, id: string, props: CompanyMicroservicesProps) {
     super(scope, id);
 
     this.productMicroservice = this.createProductMicroservice(props.productTable);
     this.basketMicroservice = this.createBasketMicroservice(props.basketTable);
+    this.orderMicroservice = this.createOrderMicroservice(props.orderTable);
   }
 
   private createProductMicroservice(productTable: ITable): NodejsFunction {
@@ -67,5 +70,30 @@ export class CompanyMicroservices extends Construct {
     basketTable.grantReadWriteData(basketMicroservice);
 
     return basketMicroservice;
+  }
+
+  private createOrderMicroservice(orderTable: ITable): NodejsFunction {
+    const nodeJsFunctionProps: NodejsFunctionProps = {
+      bundling: {
+        externalModules: [
+          'aws-sdk'
+        ]
+      },
+      environment: {
+        PRIMARY_KEY: 'username',
+        SORT_KEY: 'orderDate',
+        DYNAMODB_TABLE_NAME: orderTable.tableName
+      },
+      runtime: Runtime.NODEJS_18_X
+    }
+
+    const orderMicroservice = new NodejsFunction(this, 'orderLambdaFunction', {
+      entry: join(__dirname, `/../src/order/index.js`),
+      ...nodeJsFunctionProps,
+    })
+
+    orderTable.grantReadWriteData(orderMicroservice);
+
+    return orderMicroservice;
   }
 }
