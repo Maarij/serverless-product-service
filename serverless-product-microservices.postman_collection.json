@@ -15,13 +15,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{productEndpoint}}/product/",
+							"raw": "{{productEndpoint}}/product",
 							"host": [
 								"{{productEndpoint}}"
 							],
 							"path": [
-								"product",
-								""
+								"product"
 							]
 						}
 					},
@@ -34,7 +33,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"IPhone-X\",\r\n    \"description\": \"Description for the IPhone-X\",\r\n    \"category\": \"Phone\",\r\n    \"price\": 1000\r\n}",
+							"raw": "{\r\n    \"name\": \"Samsung 10\",\r\n    \"description\": \"Description for phone\",\r\n    \"category\": \"Phone\",\r\n    \"price\": 500\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -60,13 +59,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{productEndpoint}}/product/174b323e-e93c-47b8-98e3-f0b618fe27e3",
+							"raw": "{{productEndpoint}}/product/a2660fc8-bb68-4ced-8a3a-fac1c3ad87c2",
 							"host": [
 								"{{productEndpoint}}"
 							],
 							"path": [
 								"product",
-								"174b323e-e93c-47b8-98e3-f0b618fe27e3"
+								"a2660fc8-bb68-4ced-8a3a-fac1c3ad87c2"
 							]
 						}
 					},
@@ -87,13 +86,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{productEndpoint}}/product/174b323e-e93c-47b8-98e3-f0b618fe27e3",
+							"raw": "{{productEndpoint}}/product/a2660fc8-bb68-4ced-8a3a-fac1c3ad87c2",
 							"host": [
 								"{{productEndpoint}}"
 							],
 							"path": [
 								"product",
-								"174b323e-e93c-47b8-98e3-f0b618fe27e3"
+								"a2660fc8-bb68-4ced-8a3a-fac1c3ad87c2"
 							]
 						}
 					},
@@ -105,13 +104,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{productEndpoint}}/product/174b323e-e93c-47b8-98e3-f0b618fe27e3",
+							"raw": "{{productEndpoint}}/product/a2660fc8-bb68-4ced-8a3a-fac1c3ad87c2",
 							"host": [
 								"{{productEndpoint}}"
 							],
 							"path": [
 								"product",
-								"174b323e-e93c-47b8-98e3-f0b618fe27e3"
+								"a2660fc8-bb68-4ced-8a3a-fac1c3ad87c2"
 							]
 						}
 					},
@@ -121,11 +120,163 @@
 		},
 		{
 			"name": "basket",
-			"item": []
+			"item": [
+				{
+					"name": "basket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{basketEndpoint}}/basket/",
+							"host": [
+								"{{basketEndpoint}}"
+							],
+							"path": [
+								"basket",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "basket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"company\",\r\n    \"items\": [\r\n        {\r\n            \"quantity\": 2,\r\n            \"color\": \"Red\",\r\n            \"price\": 1000,\r\n            \"productId\": \"e639500c-4e46-4041-8068-a858b3f3d079\",\r\n            \"productName\": \"Iphone-X\"\r\n        },\r\n        {\r\n            \"quantity\": 1,\r\n            \"color\": \"Blue\",\r\n            \"price\": 500,\r\n            \"productId\": \"4c466fb5-0a4f-4f4a-8518-0a5c783e4041\",\r\n            \"productName\": \"Samsung 10\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basketEndpoint}}/basket/",
+							"host": [
+								"{{basketEndpoint}}"
+							],
+							"path": [
+								"basket",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "basket/{username}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{basketEndpoint}}/basket/company",
+							"host": [
+								"{{basketEndpoint}}"
+							],
+							"path": [
+								"basket",
+								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "basket/{username}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{basketEndpoint}}/basket/company",
+							"host": [
+								"{{basketEndpoint}}"
+							],
+							"path": [
+								"basket",
+								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "basket/checkout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"company\",\r\n    \"totalPrice\": 0,\r\n    \"firstName\": \"maarij\",\r\n    \"lastName\": \"anwar\",\r\n    \"email\": \"maarij.anwar@gmail.com\",\r\n    \"address\": \"iowa\",\r\n    \"cardInfo\": \"5554443322\",\r\n    \"paymentMethod\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basketEndpoint}}/basket/checkout",
+							"host": [
+								"{{basketEndpoint}}"
+							],
+							"path": [
+								"basket",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "order",
-			"item": []
+			"item": [
+				{
+					"name": "order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{orderEndpoint}}/order/",
+							"host": [
+								"{{orderEndpoint}}"
+							],
+							"path": [
+								"order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "order/{username}?{orderDate}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{orderEndpoint}}/order/company?orderDate=2022-01-24T18:01:07.869Z",
+							"host": [
+								"{{orderEndpoint}}"
+							],
+							"path": [
+								"order",
+								"company"
+							],
+							"query": [
+								{
+									"key": "orderDate",
+									"value": "2022-01-24T18:01:07.869Z"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
