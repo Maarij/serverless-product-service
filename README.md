@@ -14,6 +14,8 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 * `cdk synth`       emits the synthesized CloudFormation template
 * `cdk destroy`     destroy stack infrastructure
 
+https://www.udemy.com/course/aws-serverless-microservices-lambda-eventbridge-sqs-apigateway
+
 Project created with `cdk init app --language=typescript`
 
 AWS cdk docs: `https://docs.aws.amazon.com/cdk/api/v2/index.html`

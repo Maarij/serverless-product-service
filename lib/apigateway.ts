@@ -5,6 +5,7 @@ import {IFunction} from "aws-cdk-lib/aws-lambda";
 interface CompanyApiGatewayProps {
   productMicroservice: IFunction
   basketMicroservice: IFunction
+  orderMicroservice: IFunction
 }
 
 export class CompanyApiGateway extends Construct {
@@ -14,6 +15,7 @@ export class CompanyApiGateway extends Construct {
 
     this.createProductApi(props.productMicroservice);
     this.createBasketApi(props.basketMicroservice);
+    this.createOrderApi(props.orderMicroservice);
   }
 
   private createProductApi(productMicroservice: IFunction) {
@@ -46,12 +48,27 @@ export class CompanyApiGateway extends Construct {
     basket.addMethod('GET');
     basket.addMethod('POST');
 
-    const singleProduct = basket.addResource('{username}'); // /basket/{username}
-    singleProduct.addMethod('GET'); // GET /basket/{id}
-    singleProduct.addMethod('DELETE'); // DELETE /basket/{id}
+    const singleBasket = basket.addResource('{username}'); // /basket/{username}
+    singleBasket.addMethod('GET'); // GET /basket/{id}
+    singleBasket.addMethod('DELETE'); // DELETE /basket/{id}
 
     const basketCheckout = basket.addResource('checkout');
     basketCheckout.addMethod('POST'); // POST /basket/checkout
   }
 
+  private createOrderApi(orderMicroservice: IFunction) {
+    const apigw = new LambdaRestApi(this, 'orderApi', {
+      restApiName: 'Order Service',
+      handler: orderMicroservice,
+      proxy: false
+    });
+
+    const order = apigw.root.addResource('order');
+    order.addMethod('GET'); // GET /order
+
+    const singleOrder = order.addResource('{username}');
+    singleOrder.addMethod('GET'); // GET /order/{username}
+
+    return singleOrder;
+  }
 }
