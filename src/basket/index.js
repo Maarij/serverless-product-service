@@ -127,9 +127,22 @@ const deleteBasket = async (username) => {
 
 const checkoutBasket = async (event) => {
   console.log("checkoutBasket");
-  // implement function
 
-  // publish an event to eventbridge - this will subscribe by order microservice
-  // and start ordering process.
+  const checkoutRequest = JSON.parse(event.body);
+  if (checkoutRequest == null || checkoutRequest.username == null) {
+    throw new Error(`username should exist in checkoutRequest: ${checkoutRequest}`);
+  }
 
+  // Get existing basket with items
+  const basket = await getBasket(checkoutRequest.username);
+
+  // create event json object with basket items
+  // calculate totalprice, prepare order, create json data to send order
+  var checkoutPayload = prepareOrderPayload(checkoutRequest, basket);
+
+  // publish event to eventbridge -  subscribed by order
+  const publishedEvent = await publishCheckoutBasketEvent(checkoutPayload);
+
+  // remove existing basket
+  await deleteBasket(checkoutRequest.username);
 }
