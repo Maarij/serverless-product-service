@@ -33,7 +33,10 @@ export class CompanyMicroservices extends Construct {
       },
       environment: {
         PRIMARY_KEY: 'id',
-        DYNAMODB_TABLE_NAME: productTable.tableName
+        DYNAMODB_TABLE_NAME: productTable.tableName,
+        EVENT_SOURCE: "com.company.basket.checkoutbasket",
+        EVENT_DETAILTYPE: "CheckoutBasket",
+        EVENT_BUSNAME: "CompanyEventBus"
       },
       runtime: Runtime.NODEJS_18_X
     }

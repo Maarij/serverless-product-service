@@ -1,6 +1,8 @@
 import { DeleteItemCommand, GetItemCommand, PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { ddbClient } from "./ddbClient";
+import { ebClient } from "./eventBridgeClient";
+import { PutEventsCommand } from "@aws-sdk/client-eventbridge";
 
 exports.handler = async function (event) {
   console.log("request:", JSON.stringify(event, undefined, 2));
@@ -138,11 +140,64 @@ const checkoutBasket = async (event) => {
 
   // create event json object with basket items
   // calculate totalprice, prepare order, create json data to send order
-  var checkoutPayload = prepareOrderPayload(checkoutRequest, basket);
+  const checkoutPayload = prepareOrderPayload(checkoutRequest, basket);
 
   // publish event to eventbridge -  subscribed by order
   const publishedEvent = await publishCheckoutBasketEvent(checkoutPayload);
 
   // remove existing basket
   await deleteBasket(checkoutRequest.username);
+}
+
+const prepareOrderPayload = (checkoutRequest, basket) => {
+  console.log("prepareOrderPayload");
+
+  // prepare order payload -> calculate totalprice and combine checkoutRequest and basket items
+  // aggregate and enrich request and basket data in order to create order payload
+  try {
+    if (basket == null || basket.items == null) {
+      throw new Error(`basket should exist in items: "${basket}"`);
+    }
+
+    // calculate totalPrice
+    let totalPrice = 0;
+    basket.items.forEach(item => totalPrice = totalPrice + item.price);
+    checkoutRequest.totalPrice = totalPrice;
+    console.log(checkoutRequest);
+
+    // copies all properties from basket into checkoutRequest
+    Object.assign(checkoutRequest, basket);
+    console.log("Success prepareOrderPayload, orderPayload:", checkoutRequest);
+    return checkoutRequest;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
+
+const publishCheckoutBasketEvent = async (checkoutPayload) => {
+  console.log("publishCheckoutBasketEvent with payload :", checkoutPayload);
+
+  try {
+    // eventbridge parameters for setting event to target system
+    const params = {
+      Entries: [
+        {
+          Source: process.env.EVENT_SOURCE,
+          Detail: JSON.stringify(checkoutPayload),
+          DetailType: process.env.EVENT_DETAILTYPE,
+          Resources: [],
+          EventBusName: process.env.EVENT_BUSNAME
+        },
+      ],
+    };
+
+    const data = await ebClient.send(new PutEventsCommand(params));
+
+    console.log("Success, event sent; requestID:", data);
+    return data;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
 }
