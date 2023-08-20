@@ -18,14 +18,14 @@ https://www.udemy.com/course/aws-serverless-microservices-lambda-eventbridge-sqs
 
 Project created with `cdk init app --language=typescript`
 
-AWS cdk docs: `https://docs.aws.amazon.com/cdk/api/v2/index.html`
+AWS cdk docs: https://docs.aws.amazon.com/cdk/api/v2/index.html
 
 AWS SDK for JavaScript v3: 
 
-`https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/welcome.html`
+https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/welcome.html
 
-`https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/introduction/`
+https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/introduction/
 
-
+AWS Lambda - SQS: https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html
 
 

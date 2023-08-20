@@ -33,6 +33,33 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"IPhone X\",\r\n    \"description\": \"Description for phone\",\r\n    \"category\": \"Phone\",\r\n    \"price\": 1000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{productEndpoint}}/product/",
+							"host": [
+								"{{productEndpoint}}"
+							],
+							"path": [
+								"product",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
 							"raw": "{\r\n    \"name\": \"Samsung 10\",\r\n    \"description\": \"Description for phone\",\r\n    \"category\": \"Phone\",\r\n    \"price\": 500\r\n}",
 							"options": {
 								"raw": {
@@ -146,7 +173,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"company\",\r\n    \"items\": [\r\n        {\r\n            \"quantity\": 2,\r\n            \"color\": \"Red\",\r\n            \"price\": 1000,\r\n            \"productId\": \"e639500c-4e46-4041-8068-a858b3f3d079\",\r\n            \"productName\": \"Iphone-X\"\r\n        },\r\n        {\r\n            \"quantity\": 1,\r\n            \"color\": \"Blue\",\r\n            \"price\": 500,\r\n            \"productId\": \"4c466fb5-0a4f-4f4a-8518-0a5c783e4041\",\r\n            \"productName\": \"Samsung 10\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"username\": \"company\",\r\n    \"items\": [\r\n        {\r\n            \"quantity\": 2,\r\n            \"color\": \"Red\",\r\n            \"price\": 1000,\r\n            \"productId\": \"f37b0d7a-dc1d-4b4b-965e-7819b6ca478a\",\r\n            \"productName\": \"IPhone X\"\r\n        },\r\n        {\r\n            \"quantity\": 1,\r\n            \"color\": \"Blue\",\r\n            \"price\": 500,\r\n            \"productId\": \"d02a6c35-dc05-4b33-b60d-2de253af1606\",\r\n            \"productName\": \"Samsung 10\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -258,7 +285,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{orderEndpoint}}/order/company?orderDate=2022-01-24T18:01:07.869Z",
+							"raw": "{{orderEndpoint}}/order/company?orderDate=2023-08-20T13:49:44.167Z",
 							"host": [
 								"{{orderEndpoint}}"
 							],
@@ -269,7 +296,7 @@
 							"query": [
 								{
 									"key": "orderDate",
-									"value": "2022-01-24T18:01:07.869Z"
+									"value": "2023-08-20T13:49:44.167Z"
 								}
 							]
 						}

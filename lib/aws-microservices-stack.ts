@@ -4,6 +4,7 @@ import {CompanyDatabase} from "./database";
 import {CompanyMicroservices} from "./microservices";
 import {CompanyApiGateway} from "./apigateway";
 import {CompanyEventBus} from "./eventbus";
+import {CompanyQueue} from "./queue";
 
 export class AwsMicroservicesStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -23,9 +24,13 @@ export class AwsMicroservicesStack extends Stack {
       orderMicroservice: microservices.orderMicroservice
     });
 
+    const queue = new CompanyQueue(this, 'Queue', {
+      consumer: microservices.orderMicroservice
+    });
+
     const eventbus = new CompanyEventBus(this, 'EventBus', {
       publisherFunction: microservices.basketMicroservice,
-      targetFunction: microservices.orderMicroservice
+      targetQueue: queue.orderQueue
     });
   }
 }

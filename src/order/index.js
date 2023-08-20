@@ -6,10 +6,24 @@ exports.handler = async function (event) {
   console.log("request: ", JSON.stringify(event, undefined, 2));
 
   const eventType = event['detail-type'];
-  if (eventType !== undefined) {
+  if (event.Records != null) {
+    await sqsInvocation(event);
+  } else if (eventType !== undefined) {
     await eventBridgeInvocation(event); // async
   } else {
     return await apiGatewayInvocation(event); // sync
+  }
+};
+
+const sqsInvocation = async (event) => {
+  console.log(`sqsInvocation function. event: "${event}"`);
+
+  for (const record of event.Records) {
+    console.log('Record: %s', record);
+
+    const checkoutEventRequest = JSON.parse(record.body);
+
+    await createOrder(checkoutEventRequest.detail);
   }
 };
 
@@ -87,13 +101,13 @@ const getOrder = async (event) => {
 
   try {
     // request : .../order/swn?orderDate=timestamp
-    const userName = event.pathParameters.userName;
+    const username = event.pathParameters.username;
     const orderDate = event.queryStringParameters.orderDate;
 
     const params = {
-      KeyConditionExpression: "userName = :userName and orderDate = :orderDate",
+      KeyConditionExpression: "username = :username and orderDate = :orderDate",
       ExpressionAttributeValues: {
-        ":userName": {S: userName},
+        ":username": {S: username},
         ":orderDate": {S: orderDate}
       },
       TableName: process.env.DYNAMODB_TABLE_NAME
